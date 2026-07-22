@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Media Processing Pipeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/dashboard/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="logo-icon">🚗</div>
+                <div>
+                    <h1>Media Intelligence Pipeline</h1>
+                    <p class="subtitle">Asynchronous Vehicle Image Processing & Anomaly Engine</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="seedBtn" class="btn btn-secondary">
+                    <span>⚡ Seed Demo Cases</span>
+                </button>
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="apiStatus">System Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Analytics Overview Banner -->
+        <section class="analytics-grid" id="analyticsGrid">
+            <div class="card stat-card">
+                <span class="stat-label">Total Processed</span>
+                <span class="stat-value" id="statTotal">0</span>
+                <span class="stat-meta">Lifetime jobs</span>
+            </div>
+            <div class="card stat-card pass">
+                <span class="stat-label">Pass Rate</span>
+                <span class="stat-value" id="statPass">0</span>
+                <span class="stat-meta">Verified clean images</span>
+            </div>
+            <div class="card stat-card warning">
+                <span class="stat-label">Flagged / Warning</span>
+                <span class="stat-value" id="statWarning">0</span>
+                <span class="stat-meta">Minor issues detected</span>
+            </div>
+            <div class="card stat-card reject">
+                <span class="stat-label">Rejected</span>
+                <span class="stat-value" id="statReject">0</span>
+                <span class="stat-meta">Duplicates / Tampered / Blur</span>
+            </div>
+            <div class="card stat-card">
+                <span class="stat-label">Avg Latency</span>
+                <span class="stat-value" id="statLatency">0ms</span>
+                <span class="stat-meta">Execution speed</span>
+            </div>
+        </section>
+
+        <!-- Main Content Layout -->
+        <main class="main-layout">
+            <!-- Left Column: Upload Zone -->
+            <section class="upload-section">
+                <div class="card upload-card">
+                    <h2>Upload Vehicle Image</h2>
+                    <p class="section-desc">Supports JPG, PNG, WEBP, BMP up to 15MB. Processes 6 async heuristic checks.</p>
+                    
+                    <div class="dropzone" id="dropzone">
+                        <input type="file" id="fileInput" accept="image/*" class="file-input">
+                        <div class="dropzone-content">
+                            <div class="upload-icon">📸</div>
+                            <h3>Drag & drop image here</h3>
+                            <p>or <span class="browse-link">browse files</span> from your computer</p>
+                        </div>
+                    </div>
+
+                    <div id="uploadProgress" class="upload-progress hidden">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressFill"></div>
+                        </div>
+                        <span id="uploadStatusText">Uploading image...</span>
+                    </div>
+                </div>
+
+                <!-- Heuristics Info Box -->
+                <div class="card info-card">
+                    <h3>Active Inspection Heuristics</h3>
+                    <ul class="heuristics-list">
+                        <li><span class="icon">🔍</span> <strong>Blur & Sharpness:</strong> OpenCV Laplacian Variance</li>
+                        <li><span class="icon">☀️</span> <strong>Brightness & Exposure:</strong> Luminance & Contrast</li>
+                        <li><span class="icon">👯</span> <strong>Perceptual Duplicates:</strong> dHash / pHash Hamming distance</li>
+                        <li><span class="icon">📱</span> <strong>Screenshot Detection:</strong> EXIF tags, aspect ratio, Moiré FFT</li>
+                        <li><span class="icon">✂️</span> <strong>Tampering Inspection:</strong> ELA JPEG artifact disparity</li>
+                        <li><span class="icon">🪪</span> <strong>License Plate Validation:</strong> OCR + Indian Format Rules</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Right Column: Media Stream -->
+            <section class="stream-section">
+                <div class="stream-header card">
+                    <h2>Recent Processing Jobs</h2>
+                    <div class="filters">
+                        <select id="riskFilter" class="filter-select">
+                            <option value="">All Risk Levels</option>
+                            <option value="PASS">PASS Only</option>
+                            <option value="WARNING">WARNING Only</option>
+                            <option value="REJECT">REJECT Only</option>
+                        </select>
+                        <button id="refreshBtn" class="btn btn-icon" title="Refresh Feed">🔄</button>
+                    </div>
+                </div>
+
+                <div class="jobs-list" id="jobsList">
+                    <div class="empty-state">
+                        <div class="empty-icon">📂</div>
+                        <p>No media jobs uploaded yet.</p>
+                        <p class="sub">Click <strong>"Seed Demo Cases"</strong> or upload an image to start processing!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Detail Modal -->
+        <div id="detailModal" class="modal-overlay hidden">
+            <div class="modal-card card">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Job Analysis Details</h2>
+                    <button id="closeModalBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Dynamic content populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/dashboard/app.js"></script>
+</body>
+</html>
