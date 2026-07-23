@@ -13,4 +13,4 @@ if __name__ == "__main__":
     print(" Web Dashboard UI:  http://127.0.0.1:8000/dashboard")
     print(" Swagger API Docs:  http://127.0.0.1:8000/docs")
     print("==================================================================")
-    uvicorn.run("backend.app.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("backend.app.main:app", host="0.0.0.0", port=int(os.environ.get("PORT",8000)), reload=False)
